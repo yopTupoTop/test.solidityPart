@@ -13,6 +13,8 @@ contract Voting is Ownable {
         uint128 noCount;
     }
 
+    event BallotCreated(uint256 id);
+
     uint256[] private ballotIds;
     bytes32 private value;
 
@@ -36,16 +38,17 @@ contract Voting is Ownable {
         _;
     }
 
-    function createVoting(string calldata _data, bytes32[] calldata merkleProof) external inWhitelist(merkleProof) returns (uint256) {
+    function createVoting(string calldata _data, bytes32[] calldata merkleProof) external inWhitelist(merkleProof) {
         uint256 id = uint256(keccak256(abi.encode(_data)));
-        console.log(id);
         IdToBallot[id] = Ballot(_data, 0, 0);
         ballotIds.push(id);
-        return id;
+        console.log(id);
+        emit BallotCreated(id);
     }
 
     function voteFor(uint256 ballotId, bytes32[] calldata merkleProof) external inWhitelist(merkleProof) {
         require(UserVoice[msg.sender][ballotId] != true, "this user already voted");
+        console.log(111);
         IdToBallot[ballotId].yesCount++;
         UserVoice[msg.sender][ballotId] = true;
         checkYesCount(ballotId);
