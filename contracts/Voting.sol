@@ -37,7 +37,7 @@ contract Voting is Ownable {
     }
 
     function createVoting(string calldata _data, bytes32[] calldata merkleProof) external inWhitelist(merkleProof) returns (uint256) {
-        uint256 id = uint256(keccak256(abi.encode(msg.sender)));
+        uint256 id = uint256(keccak256(abi.encode(_data)));
         console.log(id);
         IdToBallot[id] = Ballot(_data, 0, 0);
         ballotIds.push(id);
