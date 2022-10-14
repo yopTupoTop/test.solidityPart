@@ -19,6 +19,10 @@ contract Voting is Ownable {
         return bytes32(uint256(uint160(user)));
     }
 
+    function setMerkleRoot(bytes32 newRoot) external onlyOwner {
+        merkleRoot = newRoot;
+    }
+
     //modifire check that user are in whitelist using merkle tree 
     modifier inWhitelist(bytes32[] calldata merkleProof) {
         require(MerkleProof.verify(merkleProof, merkleRoot, toBytes32(msg.sender)) == true, "invalid merkle proof");
