@@ -13,7 +13,7 @@ contract Voting is Ownable {
         uint128 noCount;
     }
 
-    event BallotCreated(uint256 id);
+    event BallotCreated(uint256 indexed id);
 
     uint256[] private ballotIds;
     bytes32 private value;
