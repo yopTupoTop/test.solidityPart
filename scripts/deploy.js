@@ -5,9 +5,14 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+require('dotenv').config()
 
 async function main() {
   
+  const Voting = await hre.ethers.getContractFactory("Voting");
+  const voting = await Voting.deploy();
+
+  console.log("Voting deployed to:", voting.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
